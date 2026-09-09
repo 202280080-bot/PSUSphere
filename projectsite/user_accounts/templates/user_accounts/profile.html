@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .profile-container {
+        max-width: 650px;
+        margin: 50px auto;
+    }
+
+    .profile-card {
+        background: white;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,.12);
+    }
+
+    .profile-card h1 {
+        color: #006633;
+    }
+
+    .info {
+        padding: 15px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .label {
+        color: #777;
+        font-size: 14px;
+    }
+
+    .value {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 25px;
+        margin-right: 10px;
+        padding: 12px 20px;
+        background: #006633;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .btn:hover {
+        background: #004d26;
+    }
+</style>
+
+<div class="profile-container">
+
+    <div class="profile-card">
+
+        <h1>Student Profile</h1>
+
+        <div class="info">
+            <div class="label">Username</div>
+            <div class="value">{{ user.username }}</div>
+        </div>
+
+        <div class="info">
+            <div class="label">Email</div>
+            <div class="value">{{ user.email }}</div>
+        </div>
+
+        <div class="info">
+            <div class="label">First Name</div>
+            <div class="value">
+                {{ user.first_name|default:"Not provided" }}
+            </div>
+        </div>
+
+        <div class="info">
+            <div class="label">Last Name</div>
+            <div class="value">
+                {{ user.last_name|default:"Not provided" }}
+            </div>
+        </div>
+
+        <a href="{% url 'dashboard' %}" class="btn">
+            Back to Dashboard
+        </a>
+
+        <a href="{% url 'edit_profile' %}" class="btn">
+            Edit Profile
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
