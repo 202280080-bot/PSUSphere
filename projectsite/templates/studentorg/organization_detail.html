@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Organizations | PSUSphere{% endblock %}
+{% block title %}{{ organization.name }} | PSUSphere{% endblock %}
 
 {% block content %}
 
 <div class="page-header">
-    <h4 class="page-title">Student Organizations</h4>
+    <h4 class="page-title">{{ organization.name }}</h4>
 </div>
 
 <div class="row">
@@ -13,38 +13,28 @@
         <div class="card">
 
             <div class="card-header">
-                <div class="card-title">Organizations</div>
+                <div class="card-title">Organization Details</div>
             </div>
 
             <div class="card-body">
 
-                {% for organization in organizations %}
+                <h3>{{ organization.name }}</h3>
 
-                    <div class="mb-4">
-                        <h4>
-                            <a href="{% url 'organization_detail' organization.pk %}">
-                                {{ organization.name }}
-                            </a>
-                        </h4>
+                {% if organization.college %}
+                    <p>
+                        <strong>College:</strong>
+                        {{ organization.college }}
+                    </p>
+                {% endif %}
 
-                        {% if organization.college %}
-                            <p class="text-muted">
-                                College: {{ organization.college }}
-                            </p>
-                        {% endif %}
+                <p>
+                    <strong>Description:</strong>
+                    {{ organization.description }}
+                </p>
 
-                        <p>{{ organization.description }}</p>
-                    </div>
-
-                    {% if not forloop.last %}
-                        <hr>
-                    {% endif %}
-
-                {% empty %}
-
-                    <p>No organizations available.</p>
-
-                {% endfor %}
+                <a href="{% url 'organizations' %}" class="btn btn-secondary">
+                    Back to Organizations
+                </a>
 
             </div>
         </div>
