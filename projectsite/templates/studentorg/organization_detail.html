@@ -4,6 +4,44 @@
 
 {% block content %}
 
+{% with members=organization.orgmember_set.all %}
+ <hr>
+
+    <h4 class="mt-4">Organization Members</h4>
+
+    {% for member in members %}
+        <div class="mb-3">
+            <strong>
+                {{ member.student.lastname }}, {{ member.student.firstname }}
+                {% if member.student.middlename %}
+                    {{ member.student.middlename }}
+                {% endif %}
+            </strong>
+
+            <br>
+
+            <small class="text-muted">
+                Student ID: {{ member.student.student_id }}
+            </small>
+
+            <br>
+
+            <small class="text-muted">
+                Program: {{ member.student.program }}
+            </small>
+
+            <br>
+
+            <small class="text-muted">
+                Date Joined: {{ member.date_joined }}
+            </small>
+        </div>
+
+    {% empty %}
+        <p class="text-muted">No members available.</p>
+    {% endfor %}
+{% endwith %}
+
 <div class="page-header">
     <h4 class="page-title">{{ organization.name }}</h4>
 </div>
