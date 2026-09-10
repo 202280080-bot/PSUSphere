@@ -74,7 +74,11 @@
 
             {% for organization in organizations %}
             <tr>
-                <td>{{ organization }}</td>
+                <td>
+                    <a href="{% url 'organization_detail' organization.pk %}">
+                        {{ organization.name }}
+                    </a>
+                </td>
             </tr>
             {% empty %}
             <tr>

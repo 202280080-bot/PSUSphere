@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from .models import Organization
 
@@ -8,6 +8,10 @@ def organizations(request):
     return render(request, 'studentorg/organizations.html', {
         'organizations': organization_list
     })
+
+def organization_detail(request, pk):
+    organization = get_object_or_404(Organization, pk=pk)
+    return render(request, 'studentorg/organization_detail.html', { 'organization': organization })
 
 
 class HomePageView(ListView):
