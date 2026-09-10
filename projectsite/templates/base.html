@@ -1,81 +1,256 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PSUSphere</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{% block title %}PSUSphere{% endblock %}</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport">
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-        }
-
-        nav {
-            background: #006633;
-            padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            color: #FFD700;
-            font-size: 24px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-        }
-
-        .nav-links a:hover {
-            background: #004d26;
-        }
-
-        .content {
-            padding: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900">
+    <link rel="stylesheet" href="{% static 'css/ready.css' %}">
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}">
 </head>
 
 <body>
 
-<nav>
-    <a href="{% url 'home' %}" class="logo">PSUSphere</a>
+<div class="wrapper">
 
-    <div class="nav-links">
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'announcements' %}">Announcements</a>
-        <a href="{% url 'organizations' %}">Organizations</a>
+    <!-- Header -->
+    <div class="main-header">
 
-        {% if user.is_authenticated %}
-            <a href="{% url 'dashboard' %}">Dashboard</a>
-            <a href="{% url 'profile' %}">Profile</a>
-            <a href="{% url 'logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'register' %}">Register</a>
-        {% endif %}
+        <div class="logo-header">
+            <a href="{% url 'home' %}" class="logo">
+                PSUSphere
+            </a>
+
+            <button class="navbar-toggler sidenav-toggler ml-auto"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target=".sidebar"
+                    aria-controls="sidebar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <button class="topbar-toggler more">
+                <i class="la la-ellipsis-v"></i>
+            </button>
+        </div>
+
+        <nav class="navbar navbar-header navbar-expand-lg">
+            <div class="container-fluid">
+
+                <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">
+                            Profile
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                    </li>
+
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+
+            </div>
+        </nav>
     </div>
-</nav>
 
-<div class="content">
-    {% block content %}
-    {% endblock %}
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="scrollbar-inner sidebar-wrapper">
+
+            <div class="user">
+                <div class="photo">
+                    <img src="{% static 'img/profile.jpg' %}" alt="Profile">
+                </div>
+
+                <div class="info">
+                    <a data-toggle="collapse"
+                       href="#collapseExample"
+                       aria-expanded="true">
+
+                        <span>
+                            {% if user.is_authenticated %}
+                                {{ user.username }}
+                            {% else %}
+                                Guest
+                            {% endif %}
+
+                            <span class="user-level">
+                                {% if user.is_authenticated %}
+                                    Student
+                                {% else %}
+                                    Visitor
+                                {% endif %}
+                            </span>
+
+                            <span class="caret"></span>
+                        </span>
+                    </a>
+
+                    <div class="clearfix"></div>
+
+                    <div class="collapse in"
+                         id="collapseExample"
+                         aria-expanded="true">
+
+                        <ul class="nav">
+
+                            {% if user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'profile' %}">
+                                    <span class="link-collapse">
+                                        My Profile
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{% url 'edit_profile' %}">
+                                    <span class="link-collapse">
+                                        Edit Profile
+                                    </span>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <ul class="nav">
+
+                <li class="nav-item">
+                    <a href="{% url 'home' %}">
+                        <i class="la la-home"></i>
+                        <p>Home</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'announcements' %}">
+                        <i class="la la-bullhorn"></i>
+                        <p>Announcements</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'organizations' %}">
+                        <i class="la la-users"></i>
+                        <p>Organizations</p>
+                    </a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'dashboard' %}">
+                        <i class="la la-dashboard"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'profile' %}">
+                        <i class="la la-user"></i>
+                        <p>Profile</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}">
+                        <i class="la la-sign-out"></i>
+                        <p>Logout</p>
+                    </a>
+                </li>
+
+                {% else %}
+
+                <li class="nav-item">
+                    <a href="{% url 'login' %}">
+                        <i class="la la-sign-in"></i>
+                        <p>Login</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'register' %}">
+                        <i class="la la-user-plus"></i>
+                        <p>Register</p>
+                    </a>
+                </li>
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-panel">
+
+        <div class="content">
+            <div class="container-fluid">
+
+                {% block content %}
+                {% endblock %}
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid">
+
+                <div class="copyright ml-auto">
+                    PSUSphere &copy; 2026
+                </div>
+
+            </div>
+        </footer>
+
+    </div>
+
 </div>
+
+<script src="{% static 'js/core/jquery.3.2.1.min.js' %}"></script>
+<script src="{% static 'js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/core/popper.min.js' %}"></script>
+<script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/plugin/chartist/chartist.min.js' %}"></script>
+<script src="{% static 'js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js' %}"></script>
+<script src="{% static 'js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+<script src="{% static 'js/plugin/bootstrap-toggle/bootstrap-toggle.min.js' %}"></script>
+<script src="{% static 'js/plugin/jquery-mapael/jquery.mapael.min.js' %}"></script>
+<script src="{% static 'js/plugin/jquery-mapael/maps/world_countries.min.js' %}"></script>
+<script src="{% static 'js/plugin/chart-circle/circles.min.js' %}"></script>
+<script src="{% static 'js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+<script src="{% static 'js/ready.min.js' %}"></script>
 
 </body>
 </html>
