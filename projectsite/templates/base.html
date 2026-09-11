@@ -167,6 +167,42 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{% url 'organization-list' %}">
+                        <i class="la la-list"></i>
+                         <p>Organization List</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                     <a href="{% url 'orgmember-list' %}">
+                        <i class="la la-users"></i> 
+                        <p>Org Members</p>
+                     </a>
+                </li>
+
+                <li class="nav-item">
+                     <a href="{% url 'student-list' %}">
+                        <i class="la la-user"></i>
+                        <p>Students</p>
+                     </a>
+                </li>
+
+                <li class="nav-item">
+                     <a href="{% url 'college-list' %}">
+                        <i class="la la-building"></i>
+                        <p>Colleges</p>
+                     </a>
+                </li>
+
+                <li class="nav-item">
+                     <a href="{% url 'program-list' %}">
+                        <i class="la la-book"></i>
+                        <p>Programs</p>
+                     </a>
+                </li>
+
+
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a href="{% url 'dashboard' %}">
