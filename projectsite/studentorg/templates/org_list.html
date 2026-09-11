@@ -1,4 +1,4 @@
-<{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
@@ -20,6 +20,31 @@
 
                     <div class="card-body">
 
+                        <!-- Search Form -->
+                        <form action="{% url 'organization-list' %}"
+                              method="get"
+                              class="mb-4">
+
+                            <div class="input-group">
+
+                                <input type="text"
+                                       name="q"
+                                       value="{{ request.GET.q|default:'' }}"
+                                       placeholder="Search organizations..."
+                                       class="form-control">
+
+                                <div class="input-group-append">
+                                    <button type="submit"
+                                            class="btn btn-primary">
+                                        Search
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                        <!-- Organization Table -->
                         <table class="table table-striped mt-3">
 
                             <thead>
@@ -37,8 +62,17 @@
 
                                 <tr>
                                     <td>{{ object.name }}</td>
-                                    <td>{{ object.college }}</td>
+
+                                    <td>
+                                        {% if object.college %}
+                                            {{ object.college }}
+                                        {% else %}
+                                            —
+                                        {% endif %}
+                                    </td>
+
                                     <td>{{ object.description }}</td>
+
                                     <td>
                                         <a href="{% url 'organization-update' object.pk %}">
                                             Edit
@@ -46,7 +80,7 @@
 
                                         <a href="{% url 'organization-delete' object.pk %}"
                                            class="text-danger ml-2">
-                                           Delete
+                                            Delete
                                         </a>
                                     </td>
                                 </tr>
@@ -54,7 +88,7 @@
                                 {% empty %}
 
                                 <tr>
-                                    <td colspan="3" style="text-align: center;">
+                                    <td colspan="4" class="text-center">
                                         <p>No Records Found</p>
                                     </td>
                                 </tr>
@@ -77,4 +111,4 @@
     </div>
 </div>
 
-{% endblock %}>
+{% endblock %}

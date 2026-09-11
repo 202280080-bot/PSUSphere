@@ -20,6 +20,87 @@
 
                     <div class="card-body">
 
+                        <!-- Add Program Button -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="card-title"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="pull-right">
+                                    <a href="{% url 'program-add' %}"
+                                       class="btn btn-success btn-rounded">
+                                        Add Program
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search -->
+                        <form action="{% url 'program-list' %}"
+                              method="get"
+                              class="mb-3">
+
+                            <div class="input-group">
+
+                                <input type="text"
+                                       name="q"
+                                       value="{{ request.GET.q|default:'' }}"
+                                       placeholder="Search programs..."
+                                       class="form-control">
+
+                                <div class="input-group-append">
+                                    <button type="submit"
+                                            class="btn btn-primary">
+                                        Search
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                        <!-- Sorting -->
+                        <form action="{% url 'program-list' %}"
+                              method="get"
+                              class="form-inline mb-4">
+
+                            <input type="hidden"
+                                   name="q"
+                                   value="{{ request.GET.q|default:'' }}">
+
+                            <label for="sort_by" class="mr-2">
+                                Sort by:
+                            </label>
+
+                            <select name="sort_by"
+                                    id="sort_by"
+                                    class="form-control mr-2">
+
+                                <option value="prog_name"
+                                    {% if request.GET.sort_by == "prog_name" or not request.GET.sort_by %}
+                                    selected
+                                    {% endif %}>
+                                    Program Name
+                                </option>
+
+                                <option value="college__college_name"
+                                    {% if request.GET.sort_by == "college__college_name" %}
+                                    selected
+                                    {% endif %}>
+                                    College
+                                </option>
+
+                            </select>
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-sm btn-rounded">
+                                Sort
+                            </button>
+
+                        </form>
+
+                        <!-- Program Table -->
                         <table class="table table-striped mt-3">
 
                             <thead>
@@ -45,7 +126,7 @@
 
                                         <a href="{% url 'program-delete' object.pk %}"
                                            class="text-danger ml-2">
-                                           Delete
+                                            Delete
                                         </a>
                                     </td>
                                 </tr>
@@ -53,7 +134,7 @@
                                 {% empty %}
 
                                 <tr>
-                                    <td colspan="3" style="text-align: center;">
+                                    <td colspan="3" class="text-center">
                                         <p>No Records Found</p>
                                     </td>
                                 </tr>

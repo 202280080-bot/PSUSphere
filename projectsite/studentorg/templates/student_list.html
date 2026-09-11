@@ -20,6 +20,31 @@
 
                     <div class="card-body">
 
+                        <!-- Search Form -->
+                        <form action="{% url 'student-list' %}"
+                              method="get"
+                              class="mb-4">
+
+                            <div class="input-group">
+
+                                <input type="text"
+                                       name="q"
+                                       value="{{ request.GET.q|default:'' }}"
+                                       placeholder="Search students..."
+                                       class="form-control">
+
+                                <div class="input-group-append">
+                                    <button type="submit"
+                                            class="btn btn-primary">
+                                        Search
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                        <!-- Student Table -->
                         <table class="table table-striped mt-3">
 
                             <thead>
@@ -43,13 +68,14 @@
                                     <td>{{ object.firstname }}</td>
                                     <td>{{ object.middlename|default:"" }}</td>
                                     <td>{{ object.program }}</td>
+
                                     <td>
                                         <a href="{% url 'student-update' object.pk %}">
                                             Edit
                                         </a>
 
                                         <a href="{% url 'student-delete' object.pk %}"
-                                            class="text-danger ml-2">
+                                           class="text-danger ml-2">
                                             Delete
                                         </a>
                                     </td>
@@ -58,7 +84,7 @@
                                 {% empty %}
 
                                 <tr>
-                                    <td colspan="6" style="text-align: center;">
+                                    <td colspan="6" class="text-center">
                                         <p>No Records Found</p>
                                     </td>
                                 </tr>
